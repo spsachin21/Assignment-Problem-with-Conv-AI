@@ -5,3 +5,4 @@ scikit-learn
 gurobipy
 pyomo
 ortools
+rank-bm25
