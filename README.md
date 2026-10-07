@@ -25,8 +25,9 @@ This application bridges **Generative AI** with **Rigorous Mathematical Optimiza
   - **Google OR-Tools (SCIP)** (MIP Solver)
   - **Google OR-Tools (CP-SAT)** (Constraint Programming)
   - **Pyomo (GLPK)** (Open-Source LP/MIP)
+-**Flexible Stopping Criteria**: Solve all the way to **global mathematical optimality** or set a strict **time limit** for real-time, large-scale scheduling runs.
 - **Zero-Code Rule Engine**: Parses natural-language prompts into formal algebraic constraints without writing code.
-- **Dynamic Human-in-the-Loop (HITL)**: Inspect the parsed AST/JSON, verify indices and operators, and approve or discard rules safely.
+- **Dynamic Human-in-the-Loop (HITL)**: Inspect the parsed JSON, verify indices and operators, and approve or discard rules safely.
 - **Live Solver Statistics**: Track runtime, gap percentage, objective cost, and feasibility status in real time.
 - **Post-Solve Solution Chat**: Ask questions directly about the solution (e.g., *"Why was Task 4 assigned to Bob instead of Alice?"*).
 - **One-Click Excel Export**: Download final assignment schedules formatted for enterprise reporting.
@@ -36,7 +37,7 @@ This application bridges **Generative AI** with **Rigorous Mathematical Optimiza
 ## 🏗️ Architecture & Pipeline
 
 ```text
-       User Prompt ("No junior dev on Task A")
+       User Prompt (Business Rule)
                           │
                           ▼
             [ Few-Shot Example Retriever ]
