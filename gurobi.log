@@ -1,0 +1,15 @@
+
+Gurobi 11.0.3 (win64, gurobi_cl) logging started Thu Jul 16 15:40:44 2026
+
+Set parameter ServerPassword
+Set parameter CSManager to value "52.231.202.235:61080"
+Set parameter LogFile to value "gurobi.log"
+Using license file c:\gurobi\gurobi.lic
+Compute Server job ID: b489ddd6-8a3c-4d02-b4ae-a4d70c3e9611
+Capacity available on 'gurobi.routecap.com' - connecting...
+Established HTTP unencrypted connection
+
+Compute Server communication statistics:
+  Sent: 0.000 MB in 3 msgs and 0.44s (0.00 MB/s)
+  Received: 0.001 MB in 3 msgs and 0.67s (0.00 MB/s)
+

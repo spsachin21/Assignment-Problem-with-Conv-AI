@@ -1,0 +1,818 @@
+[
+  {
+    "id": 1,
+    "family": "employee_unavailable",
+    "tags": [
+      "employee",
+      "unavailable",
+      "availability",
+      "absence",
+      "cannot_work",
+      "no_assignment",
+      "employee_constraint"
+    ],
+    "user": "Employee E2 is unavailable.",
+    "dsl": "FORALL t\nx[E2,t] == 0"
+  },
+  {
+    "id": 2,
+    "family": "employee_assignment",
+    "tags": [
+      "employee",
+      "task",
+      "assignment",
+      "assign",
+      "mandatory",
+      "fixed_assignment",
+      "employee_task"
+    ],
+    "user": "Assign Employee E1 to Task T3.",
+    "dsl": "x[E1,T3] == 1"
+  },
+  {
+    "id": 3,
+    "family": "employee_forbidden_task",
+    "tags": [
+      "employee",
+      "task",
+      "forbidden",
+      "prohibited",
+      "cannot_assign",
+      "restriction",
+      "employee_task"
+    ],
+    "user": "Never assign Employee E4 to Task T7.",
+    "dsl": "x[E4,T7] == 0"
+  },
+  {
+    "id": 4,
+    "family": "task_owner",
+    "tags": [
+      "task",
+      "employee",
+      "exclusive_assignment",
+      "only_employee",
+      "task_owner",
+      "authorized_employee",
+      "restriction"
+    ],
+    "user": "Only Employee E2 may perform Task T5.",
+    "dsl": "FORALL e\nWHERE e != E2\nx[e,T5] == 0"
+  },
+  {
+    "id": 5,
+    "family": "task_owner",
+    "tags": [
+      "task",
+      "employee",
+      "exclusive_assignment",
+      "only_employee",
+      "task_owner",
+      "authorized_employee",
+      "restriction"
+    ],
+    "user": "Assign Task T8 only to Employee E7.",
+    "dsl": "FORALL e\nWHERE e != E7\nx[e,T8] == 0"
+  },
+  {
+    "id": 6,
+    "family": "employee_workload",
+    "tags": [
+      "employee",
+      "workload",
+      "no_work",
+      "zero_tasks",
+      "unassigned",
+      "employee_constraint",
+      "task_limit"
+    ],
+    "user": "Employee E3 should receive no work.",
+    "dsl": "SUM x[E3,*] == 0"
+  },
+  {
+    "id": 7,
+    "family": "employee_workload",
+    "tags": [
+      "employee",
+      "workload",
+      "minimum_tasks",
+      "at_least_one",
+      "mandatory_assignment",
+      "employee_constraint",
+      "task_requirement"
+    ],
+    "user": "Employee E6 must receive at least one task.",
+    "dsl": "SUM x[E6,*] >= 1"
+  },
+  {
+    "id": 8,
+    "family": "employee_workload",
+    "tags": [
+      "employee",
+      "workload",
+      "maximum_tasks",
+      "at_most_one",
+      "task_limit",
+      "employee_constraint",
+      "capacity"
+    ],
+    "user": "Employee E5 may perform at most one task.",
+    "dsl": "SUM x[E5,*] <= 1"
+  },
+  {
+    "id": 9,
+    "family": "soft_preference",
+    "tags": [
+      "soft_constraint",
+      "preference",
+      "preferred_assignment",
+      "employee",
+      "task",
+      "weight",
+      "optional"
+    ],
+    "user": "Prefer assigning Employee E4 to Task T6.",
+    "dsl": "SOFT\nWEIGHT = 20\nx[E4,T6] == 1"
+  },
+  {
+    "id": 10,
+    "family": "soft_preference",
+    "tags": [
+      "soft_constraint",
+      "preference",
+      "if_possible",
+      "preferred_employee",
+      "optional_assignment",
+      "weight",
+      "employee"
+    ],
+    "user": "If possible, assign Employee E8.",
+    "dsl": "SOFT\nWEIGHT = 15\nSUM x[E8,*] >= 1"
+  },
+  {
+    "id": 11,
+    "family": "employee_relationship",
+    "tags": [
+      "employee",
+      "relationship",
+      "mutual_exclusion",
+      "cannot_work_together",
+      "pair_constraint",
+      "exclusive",
+      "assignment"
+    ],
+    "user": "Employees E1 and E2 cannot work together.",
+    "dsl": "SUM x[E1,*] + SUM x[E2,*] <= 1"
+  },
+  {
+    "id": 12,
+    "family": "employee_relationship",
+    "tags": [
+      "employee",
+      "relationship",
+      "exactly_one",
+      "exclusive_choice",
+      "pair_constraint",
+      "assignment",
+      "selection"
+    ],
+    "user": "Exactly one of Employees E3 and E4 should work.",
+    "dsl": "SUM x[E3,*] + SUM x[E4,*] == 1"
+  },
+  {
+    "id": 13,
+    "family": "employee_relationship",
+    "tags": [
+      "employee",
+      "relationship",
+      "at_least_one",
+      "minimum_one",
+      "group_constraint",
+      "assignment",
+      "selection"
+    ],
+    "user": "At least one of Employees E5 and E6 must be assigned.",
+    "dsl": "SUM x[E5,*] + SUM x[E6,*] >= 1"
+  },
+  {
+    "id": 14,
+    "family": "employee_relationship",
+    "tags": [
+      "employee",
+      "relationship",
+      "only_one",
+      "mutual_exclusion",
+      "group_constraint",
+      "exclusive",
+      "selection"
+    ],
+    "user": "Only one of Employees E7, E8 and E9 may work.",
+    "dsl": "SUM x[E7,*] + SUM x[E8,*] + SUM x[E9,*] <= 1"
+  },
+  {
+    "id": 15,
+    "family": "task_choice",
+    "tags": [
+      "employee",
+      "task",
+      "either_or",
+      "task_choice",
+      "exclusive_task",
+      "assignment",
+      "selection"
+    ],
+    "user": "Employee E2 must work on either Task T3 or Task T4.",
+    "dsl": "x[E2,T3] + x[E2,T4] == 1"
+  },
+  {
+    "id": 16,
+    "family": "task_choice",
+    "tags": [
+      "employee",
+      "task",
+      "allowed_tasks",
+      "only_tasks",
+      "task_restriction",
+      "assignment",
+      "filter"
+    ],
+    "user": "Employee E5 may work only on Tasks T1 or T2.",
+    "dsl": "FORALL t\nWHERE t NOT IN {T1,T2}\nx[E5,t] == 0"
+  },
+  {
+    "id": 17,
+    "family": "employee_forbidden_task",
+    "tags": [
+      "employee",
+      "task",
+      "forbidden_tasks",
+      "prohibited",
+      "restriction",
+      "multiple_tasks",
+      "assignment"
+    ],
+    "user": "Employee E6 cannot work on Tasks T8, T9 or T10.",
+    "dsl": "x[E6,T8] == 0\nx[E6,T9] == 0\nx[E6,T10] == 0"
+  },
+  {
+    "id": 18,
+    "family": "employee_group",
+    "tags": [
+      "employee_group",
+      "multiple_employees",
+      "unavailable",
+      "group_constraint",
+      "availability",
+      "absence",
+      "no_assignment"
+    ],
+    "user": "Employees E1, E2 and E3 are unavailable.",
+    "dsl": "FORALL t\nx[E1,t] == 0\nFORALL t\nx[E2,t] == 0\nFORALL t\nx[E3,t] == 0"
+  },
+  {
+    "id": 19,
+    "family": "task_allowed_employees",
+    "tags": [
+      "task",
+      "allowed_employees",
+      "authorized",
+      "employee_group",
+      "restriction",
+      "exclusive_assignment",
+      "task_owner"
+    ],
+    "user": "Only Employees E4 and E5 may perform Task T6.",
+    "dsl": "FORALL e\nWHERE e NOT IN {E4,E5}\nx[e,T6] == 0"
+  },
+  {
+    "id": 20,
+    "family": "task_allowed_employees",
+    "tags": [
+      "task",
+      "allowed_employee",
+      "exception",
+      "only_employee",
+      "restriction",
+      "authorized",
+      "task_assignment"
+    ],
+    "user": "Employees except E7 may not perform Task T8.",
+    "dsl": "FORALL e\nWHERE e != E7\nx[e,T8] == 0"
+  },
+  {
+    "id": 21,
+    "family": "combined_constraint",
+    "tags": [
+      "combined_constraint",
+      "assignment",
+      "unavailable",
+      "employee",
+      "multiple_rules",
+      "hard_constraint",
+      "task"
+    ],
+    "user": "Assign Employee E1 to Task T2 and do not assign Employee E3.",
+    "dsl": "x[E1,T2] == 1\nFORALL t\nx[E3,t] == 0"
+  },
+  {
+    "id": 22,
+    "family": "combined_constraint",
+    "tags": [
+      "combined_constraint",
+      "soft_constraint",
+      "hard_constraint",
+      "preference",
+      "task_restriction",
+      "employee",
+      "task"
+    ],
+    "user": "Employee E2 should preferably work on Task T5 and Employee E6 must not work on Task T5.",
+    "dsl": "SOFT\nWEIGHT = 20\nx[E2,T5] == 1\nx[E6,T5] == 0"
+  },
+  {
+    "id": 23,
+    "family": "combined_constraint",
+    "tags": [
+      "combined_constraint",
+      "mutual_exclusion",
+      "soft_preference",
+      "employee_relationship",
+      "preferred_employee",
+      "exclusive",
+      "selection"
+    ],
+    "user": "Only one of Employees E1 and E2 may work, and if one works it should preferably be E1.",
+    "dsl": "SUM x[E1,*] + SUM x[E2,*] <= 1\nSOFT\nWEIGHT = 10\nSUM x[E1,*] >= 1"
+  },
+  {
+    "id": 24,
+    "family": "conditional_filter",
+    "tags": [
+      "conditional_filter",
+      "employee_group",
+      "task_restriction",
+      "where_clause",
+      "employee_filter",
+      "forbidden",
+      "task"
+    ],
+    "user": "Employees E2, E4 and E6 cannot perform Task T3.",
+    "dsl": "FORALL e\nWHERE e IN {E2,E4,E6}\nx[e,T3] == 0"
+  },
+  {
+    "id": 25,
+    "family": "conditional_filter",
+    "tags": [
+      "conditional_filter",
+      "task_exception",
+      "allowed_tasks",
+      "where_clause",
+      "employee",
+      "task_filter",
+      "restriction"
+    ],
+    "user": "Employee E5 cannot perform any task except T2 and T4.",
+    "dsl": "FORALL t\nWHERE t NOT IN {T2,T4}\nx[E5,t] == 0"
+  },
+  {
+    "id": 26,
+    "family": "model_violation",
+    "tags": ["invalid", "multiple_tasks", "employee", "assignment"],
+    "user": "Assign Employee E2 to both Task T1 and Task T2.",
+    "dsl": "MODEL_VIOLATION"
+  },
+  {
+    "id": 27,
+    "family": "model_violation",
+    "tags": ["invalid", "multiple_employees", "task"],
+    "user": "Assign both Employee E1 and Employee E2 to Task T5.",
+    "dsl": "MODEL_VIOLATION"
+  },
+  {
+    "id": 28,
+    "family": "employee_assignment",
+    "tags": ["mandatory", "employee", "task", "assignment"],
+    "user": "Employee E4 must be assigned to Task T8.",
+    "dsl": "x[E4,T8] == 1"
+  },
+  {
+    "id": 29,
+    "family": "employee_forbidden_task",
+    "tags": ["forbidden", "employee", "task"],
+    "user": "Employee E9 must never perform Task T12.",
+    "dsl": "x[E9,T12] == 0"
+  },
+  {
+    "id": 30,
+    "family": "employee_group",
+    "tags": ["availability", "multiple_employees"],
+    "user": "Employees E10, E11 and E12 are unavailable today.",
+    "dsl": "FORALL t\nx[E10,t] == 0\nFORALL t\nx[E11,t] == 0\nFORALL t\nx[E12,t] == 0"
+  },
+  {
+    "id": 31,
+    "family": "task_owner",
+    "tags": ["exclusive", "task", "employee"],
+    "user": "Only Employee E5 may perform Task T9.",
+    "dsl": "FORALL e\nWHERE e != E5\nx[e,T9] == 0"
+  },
+  {
+    "id": 32,
+    "family": "task_allowed_employees",
+    "tags": ["task", "employee_group", "allowed"],
+    "user": "Only Employees E3, E4 and E8 may perform Task T6.",
+    "dsl": "FORALL e\nWHERE e NOT IN {E3,E4,E8}\nx[e,T6] == 0"
+  },
+  {
+    "id": 33,
+    "family": "conditional_filter",
+    "tags": ["task", "employee_group", "forbidden"],
+    "user": "Employees E2, E5 and E9 cannot perform Task T7.",
+    "dsl": "FORALL e\nWHERE e IN {E2,E5,E9}\nx[e,T7] == 0"
+  },
+  {
+    "id": 34,
+    "family": "task_choice",
+    "tags": ["allowed_tasks", "employee"],
+    "user": "Employee E6 may work only on Tasks T3, T4 and T8.",
+    "dsl": "FORALL t\nWHERE t NOT IN {T3,T4,T8}\nx[E6,t] == 0"
+  },
+  {
+    "id": 35,
+    "family": "employee_relationship",
+    "tags": ["mutual_exclusion", "employees"],
+    "user": "Employees E7 and E8 cannot both be assigned.",
+    "dsl": "SUM x[E7,*] + SUM x[E8,*] <= 1"
+  },
+  {
+    "id": 36,
+    "family": "employee_relationship",
+    "tags": ["exactly_one", "employees"],
+    "user": "Exactly one of Employees E1 and E9 should be assigned.",
+    "dsl": "SUM x[E1,*] + SUM x[E9,*] == 1"
+  },
+  {
+    "id": 37,
+    "family": "employee_relationship",
+    "tags": ["at_least_one", "employees"],
+    "user": "At least one of Employees E2, E3 and E4 must be assigned.",
+    "dsl": "SUM x[E2,*] + SUM x[E3,*] + SUM x[E4,*] >= 1"
+  },
+  {
+    "id": 38,
+    "family": "soft_preference",
+    "tags": ["preferred_assignment", "employee", "task"],
+    "user": "Prefer assigning Employee E10 to Task T5.",
+    "dsl": "SOFT\nWEIGHT = 20\nx[E10,T5] == 1"
+  },
+  {
+    "id": 39,
+    "family": "soft_preference",
+    "tags": ["preferred_employee"],
+    "user": "If possible, assign Employee E12.",
+    "dsl": "SOFT\nWEIGHT = 15\nSUM x[E12,*] >= 1"
+  },
+  {
+    "id": 40,
+    "family": "combined_constraint",
+    "tags": ["assignment", "forbidden", "combined"],
+    "user": "Assign Employee E2 to Task T10 and never assign Employee E5 to Task T10.",
+    "dsl": "x[E2,T10] == 1\nx[E5,T10] == 0"
+  },
+  {
+    "id": 41,
+    "family": "combined_constraint",
+    "tags": ["availability", "mandatory_assignment"],
+    "user": "Employee E11 is unavailable and Employee E6 must perform Task T2.",
+    "dsl": "FORALL t\nx[E11,t] == 0\nx[E6,T2] == 1"
+  },
+  {
+    "id": 42,
+    "family": "task_owner",
+    "tags": ["exclusive_assignment", "employee"],
+    "user": "Task T13 can only be assigned to Employee E1.",
+    "dsl": "FORALL e\nWHERE e != E1\nx[e,T13] == 0"
+  },
+  {
+    "id": 43,
+    "family": "employee_group",
+    "tags": ["multiple_unavailable", "employees"],
+    "user": "Employees E13, E14, E15 and E16 are unavailable.",
+    "dsl": "FORALL t\nx[E13,t] == 0\nFORALL t\nx[E14,t] == 0\nFORALL t\nx[E15,t] == 0\nFORALL t\nx[E16,t] == 0"
+  },
+  {
+    "id": 44,
+    "family": "conditional_filter",
+    "tags": ["allowed_tasks", "employee"],
+    "user": "Employee E3 cannot perform any task except T5 and T11.",
+    "dsl": "FORALL t\nWHERE t NOT IN {T5,T11}\nx[E3,t] == 0"
+  },
+  {
+    "id": 45,
+    "family": "employee_relationship",
+    "tags": ["exclusive_group"],
+    "user": "Only one of Employees E17, E18, E19 and E20 may be assigned.",
+    "dsl": "SUM x[E17,*] + SUM x[E18,*] + SUM x[E19,*] + SUM x[E20,*] <= 1"
+  },
+  {
+    "id": 46,
+    "family": "unsupported_constraint",
+    "tags": ["unsupported", "experience"],
+    "user": "Assign the most experienced employee to every task.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 47,
+    "family": "unsupported_constraint",
+    "tags": ["unsupported", "performance"],
+    "user": "Assign employees based on last year's performance ratings.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 48,
+    "family": "unsupported_constraint",
+    "tags": ["unsupported", "fairness"],
+    "user": "Distribute tasks as fairly as possible among all employees.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 49,
+    "family": "unsupported_constraint",
+    "tags": ["unsupported", "optimization"],
+    "user": "Minimize employee stress while assigning tasks.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 50,
+    "family": "unsupported_constraint",
+    "tags": ["unsupported", "business_rule"],
+    "user": "Choose the best assignment based on employee satisfaction.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 51,
+    "family": "skill_restriction",
+    "tags": ["skills", "python", "restriction"],
+    "user": "Only employees with Python skill may perform Task T5.",
+    "dsl": "FORALL e\nWHERE \"python\" NOT IN e.skills\nx[e,T5] == 0"
+  },
+  {
+    "id": 52,
+    "family": "skill_restriction",
+    "tags": ["skills", "java", "restriction"],
+    "user": "Employees without Java skill cannot perform Task T2.",
+    "dsl": "FORALL e\nWHERE \"java\" NOT IN e.skills\nx[e,T2] == 0"
+  },
+  {
+    "id": 53,
+    "family": "skill_preference",
+    "tags": ["skills", "python", "soft"],
+    "user": "Prefer assigning Python developers to Task T4.",
+    "dsl": "SOFT\nWEIGHT = 20\nFORALL e\nWHERE \"python\" IN e.skills\nx[e,T4] == 1"
+  },
+  {
+    "id": 54,
+    "family": "skill_exclusion",
+    "tags": ["skills", "sql"],
+    "user": "Employees with SQL skill must not perform Task T8.",
+    "dsl": "FORALL e\nWHERE \"sql\" IN e.skills\nx[e,T8] == 0"
+  },
+  {
+    "id": 55,
+    "family": "skill_group",
+    "tags": ["skills", "aws"],
+    "user": "Only employees with AWS skill may perform Task T10.",
+    "dsl": "FORALL e\nWHERE \"aws\" NOT IN e.skills\nx[e,T10] == 0"
+  },
+  {
+    "id": 56,
+    "family": "multi_skill",
+    "tags": ["python", "sql"],
+    "user": "Only employees with both Python and SQL skills may perform Task T6.",
+    "dsl": "FORALL e\nWHERE \"python\" NOT IN e.skills OR \"sql\" NOT IN e.skills\nx[e,T6] == 0"
+  },
+  {
+    "id": 57,
+    "family": "multi_skill",
+    "tags": ["java", "spring"],
+    "user": "Employees must have both Java and Spring skills for Task T7.",
+    "dsl": "FORALL e\nWHERE \"java\" NOT IN e.skills OR \"spring\" NOT IN e.skills\nx[e,T7] == 0"
+  },
+  {
+    "id": 58,
+    "family": "name_constraint",
+    "tags": ["employee_name"],
+    "user": "Only Alice may perform Task T3.",
+    "dsl": "FORALL e\nWHERE e.name != \"Alice\"\nx[e,T3] == 0"
+  },
+  {
+    "id": 59,
+    "family": "name_constraint",
+    "tags": ["employee_name"],
+    "user": "Do not assign Bob to Task T9.",
+    "dsl": "x[Bob,T9] == 0"
+  },
+  {
+    "id": 60,
+    "family": "name_preference",
+    "tags": ["employee_name", "soft"],
+    "user": "Prefer assigning Charlie whenever possible.",
+    "dsl": "SOFT\nWEIGHT = 15\nSUM x[Charlie,*] >= 1"
+  },
+  {
+    "id": 61,
+    "family": "required_skill",
+    "tags": ["task_skills"],
+    "user": "Assign Task T12 only to employees matching all required skills.",
+    "dsl": "AUTO_SKILL_MATCH(T12)"
+  },
+  {
+    "id": 62,
+    "family": "required_skill",
+    "tags": ["task_skills"],
+    "user": "Never assign employees lacking required skills to any task.",
+    "dsl": "AUTO_SKILL_MATCH(ALL)"
+  },
+  {
+    "id": 63,
+    "family": "skill_preference",
+    "tags": ["matching_skills"],
+    "user": "Prefer assigning employees whose skills perfectly match the task requirements.",
+    "dsl": "SOFT\nWEIGHT = 25\nAUTO_SKILL_MATCH(ALL)"
+  },
+  {
+    "id": 64,
+    "family": "unsupported_constraint",
+    "tags": ["experience"],
+    "user": "Assign the most experienced employee.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 65,
+    "family": "unsupported_constraint",
+    "tags": ["salary"],
+    "user": "Assign the lowest paid employee.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 66,
+    "family": "unsupported_constraint",
+    "tags": ["distance"],
+    "user": "Assign the employee living closest to the office.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 67,
+    "family": "unsupported_constraint",
+    "tags": ["performance"],
+    "user": "Assign employees according to their performance ratings.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 68,
+    "family": "unsupported_constraint",
+    "tags": ["gender"],
+    "user": "Prefer female employees.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 69,
+    "family": "unsupported_constraint",
+    "tags": ["age"],
+    "user": "Assign only employees younger than 30.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 70,
+    "family": "unsupported_constraint",
+    "tags": ["location"],
+    "user": "Assign employees from Mumbai.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 71,
+    "family": "unsupported_constraint",
+    "tags": ["department"],
+    "user": "Only HR employees may work on Task T8.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 72,
+    "family": "unsupported_constraint",
+    "tags": ["certification"],
+    "user": "Only AWS certified employees may perform cloud tasks.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 73,
+    "family": "unsupported_constraint",
+    "tags": ["optimization"],
+    "user": "Maximize employee satisfaction.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 74,
+    "family": "unsupported_constraint",
+    "tags": ["fairness"],
+    "user": "Balance the workload fairly across all employees.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 75,
+    "family": "unsupported_constraint",
+    "tags": ["optimization"],
+    "user": "Choose the optimal assignment considering employee happiness.",
+    "dsl": "UNSUPPORTED"
+  },
+  {
+    "id": 76,
+    "family": "employee_unavailable",
+    "tags": ["employee", "unavailable", "no_assignment", "specific_employee"],
+    "user": "Do not assign Employee E4 to any task.",
+    "dsl": "FORALL t\nx[E4,t] == 0"
+  },
+  {
+    "id": 77,
+    "family": "employee_unavailable",
+    "tags": ["employee", "exclude", "no_work", "specific_employee"],
+    "user": "Employee E8 should not be assigned any task.",
+    "dsl": "FORALL t\nx[E8,t] == 0"
+  },
+  {
+    "id": 78,
+    "family": "employee_unavailable",
+    "tags": ["employee", "remove", "assignment", "specific_employee"],
+    "user": "Exclude Employee E3 from all task assignments.",
+    "dsl": "FORALL t\nx[E3,t] == 0"
+  },
+  {
+    "id": 79,
+    "family": "skill_unavailable",
+    "tags": ["skills", "python", "exclude", "no_assignment"],
+    "user": "Employees with Python skill should not be assigned to any task.",
+    "dsl": "FORALL e\nWHERE \"python\" IN e.skills\nFORALL t\nx[e,t] == 0"
+  },
+  {
+    "id": 80,
+    "family": "skill_unavailable",
+    "tags": ["skills", "java", "exclude", "no_assignment"],
+    "user": "Do not assign any employee having Java skill to any task.",
+    "dsl": "FORALL e\nWHERE \"java\" IN e.skills\nFORALL t\nx[e,t] == 0"
+  },
+  {
+    "id": 81,
+    "family": "skill_unavailable",
+    "tags": ["skills", "sql", "restriction", "all_tasks"],
+    "user": "Employees possessing SQL skill must not receive any task.",
+    "dsl": "FORALL e\nWHERE \"sql\" IN e.skills\nFORALL t\nx[e,t] == 0"
+  },
+  {
+    "id": 82,
+    "family": "skill_unavailable",
+    "tags": ["skills", "aws", "exclude"],
+    "user": "Exclude employees with AWS skill from every task.",
+    "dsl": "FORALL e\nWHERE \"aws\" IN e.skills\nFORALL t\nx[e,t] == 0"
+  },
+  {
+    "id": 83,
+    "family": "multi_skill_unavailable",
+    "tags": ["skills", "python", "sql", "exclude"],
+    "user": "Employees having both Python and SQL skills should not be assigned any task.",
+    "dsl": "FORALL e\nWHERE \"python\" IN e.skills AND \"sql\" IN e.skills\nFORALL t\nx[e,t] == 0"
+  },
+  {
+    "id": 84,
+    "family": "employee_group",
+    "tags": ["employees", "group", "exclude", "all_tasks"],
+    "user": "Employees E2, E5 and E7 should not be assigned any task.",
+    "dsl": "FORALL t\nx[E2,t] == 0\nFORALL t\nx[E5,t] == 0\nFORALL t\nx[E7,t] == 0"
+  },
+  {
+    "id": 85,
+    "family": "employee_unavailable",
+    "tags": ["employee", "inactive", "all_tasks"],
+    "user": "Mark Employee E10 as unavailable for all tasks.",
+    "dsl": "FORALL t\nx[E10,t] == 0"
+  },
+  {
+    "id": 86,
+    "family": "employee compulsory assignment",
+    "tags":["employee", "not idle", "all_tasks", "busy"],
+    "user": "Employee E1 should not be idle today.",
+    "dsl": "FORALL t\nx[E1,t]>=1"
+  },
+  {
+    "id": 87,
+    "family": "employee compulsory assignment",
+    "tags": ["employee", "mandatory", "not idle", "priority"],
+    "user": "Employee E7 is on duty today and must be assigned at least one task.",
+    "dsl": "SUM(x[E7,*])>=1"
+  },
+  {
+    "id": 88,
+    "family": "employee compulsory assignment",
+    "tags": ["employee", "availability", "mandatory", "utilization"],
+    "user": "Since employee E22 is available for the entire shift, do not leave them unassigned.",
+    "dsl": "SUM(x[E22,*])>=1"
+  }
+]
