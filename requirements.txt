@@ -7,3 +7,4 @@ pyomo
 ortools
 rank-bm25
 sentence-transformers
+ollama
