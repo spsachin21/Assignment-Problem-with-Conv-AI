@@ -6,3 +6,4 @@ gurobipy
 pyomo
 ortools
 rank-bm25
+sentence-transformers
